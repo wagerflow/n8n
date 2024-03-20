@@ -30,7 +30,7 @@ x-shared: &shared
     N8N_SMTP_PASS: " "
     N8N_SMTP_SENDER: ${SMTP_FROM_EMAIL}
     N8N_SMTP_SSL: "false"
-    NODE_TLS_REJECT_UNAUTHORIZED: 0
+    NODE_TLS_REJECT_UNAUTHORIZED: 1
     EXECUTIONS_DATA_PRUNE: "true"
     EXECUTIONS_DATA_MAX_AGE: 336
     N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
@@ -60,10 +60,21 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+  pg_admin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin4
+    ports:
+        - "15432:80"
+    environment:
+        - GUNICORN_THREADS=1
+        - PGADMIN_DEFAULT_EMAIL=gordon@wagerflow.io
+        - PGADMIN_DEFAULT_PASSWORD=Spinnekop13!
+    depends_on:
+        - postgres
   redis:
     image: redis:latest
     restart: always
-    container_name: cache    
+    container_name: cache
     volumes:
       - ./redis_data:/data
     healthcheck:
@@ -74,7 +85,7 @@ services:
   n8n:
     <<: *shared
     dns:
-      - 8.8.8.8    
+      - 8.8.8.8
     ports:
       - 172.17.0.1:5678:5678
   n8n-worker:
