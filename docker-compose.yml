@@ -6,7 +6,7 @@ volumes:
 x-shared: &shared
   restart: always
   image: repo/n8n
-  build: ./
+  #build: ./
   environment:
     DB_TYPE: postgresdb
     DB_POSTGRESDB_HOST: postgres

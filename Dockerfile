@@ -35,7 +35,8 @@ RUN \
 	pnpm rebuild --dir /usr/local/lib/node_modules/n8n sqlite3 && \
 	ln -s /usr/local/lib/node_modules/n8n/bin/n8n /usr/local/bin/n8n && \
 	mkdir .n8n && \
-	chown node:node .n8n
+	chown node:node .n8n && \
+	chmod 777 -R .n8n
 
 ENV SHELL /bin/sh
 USER node
