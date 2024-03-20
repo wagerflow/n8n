@@ -64,7 +64,7 @@ services:
     image: dpage/pgadmin4:latest
     container_name: pgadmin4
     ports:
-        - "15432:80"
+        - 172.17.0.1:15432:80
     environment:
         - GUNICORN_THREADS=1
         - PGADMIN_DEFAULT_EMAIL=gordon@wagerflow.io
