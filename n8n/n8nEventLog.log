@@ -1,0 +1,2 @@
+{"__type":"$$EventMessage","id":"f6f65ba8-4405-425c-8a8e-af4b7387dc0d","ts":"2024-03-20T19:08:50.115+00:00","eventName":"n8n.worker.started","message":"n8n.worker.started","payload":{"workerId":"worker-fXp1NpuGWuJUZ4Bl"}}
+{"__type":"$$EventMessageConfirm","confirm":"f6f65ba8-4405-425c-8a8e-af4b7387dc0d","ts":"2024-03-20T19:08:50.125+00:00","source":{"id":"0","name":"eventBus"}}
