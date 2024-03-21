@@ -5,6 +5,8 @@ volumes:
   redis_data:
 x-shared: &shared
   restart: always
+  image: repo/n8n
+  build: ./
   environment:
     DB_TYPE: postgresdb
     DB_POSTGRESDB_HOST: postgres
@@ -28,7 +30,7 @@ x-shared: &shared
     N8N_SMTP_PASS: " "
     N8N_SMTP_SENDER: ${SMTP_FROM_EMAIL}
     N8N_SMTP_SSL: "false"
-    NODE_TLS_REJECT_UNAUTHORIZED: 1
+    NODE_TLS_REJECT_UNAUTHORIZED: 0
     EXECUTIONS_DATA_PRUNE: "true"
     EXECUTIONS_DATA_MAX_AGE: 336
     N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
@@ -61,7 +63,7 @@ services:
   redis:
     image: redis:latest
     restart: always
-    container_name: cache
+    container_name: cache    
     volumes:
       - ./redis_data:/data
     healthcheck:
@@ -71,15 +73,12 @@ services:
       retries: 10
   n8n:
     <<: *shared
-    image: repo/n8n
-    #build: ./
     dns:
-      - 8.8.8.8
+      - 8.8.8.8    
     ports:
       - 172.17.0.1:5678:5678
   n8n-worker:
     <<: *shared
-    image: repo/n8n
     command: worker
     depends_on:
       - n8n
