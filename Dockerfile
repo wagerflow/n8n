@@ -1,7 +1,7 @@
 ARG NODE_VERSION=18
 
 # 1. Create an image to build n8n
-FROM --platform=linux/amd64 wagerflow/base:${NODE_VERSION} as builder
+FROM --platform=linux/amd64 n8nio/base:${NODE_VERSION} as builder
 
 # Build the application from source
 WORKDIR /src
@@ -21,7 +21,7 @@ RUN mkdir /compiled
 RUN NODE_ENV=production pnpm --filter=n8n --prod --no-optional deploy /compiled
 
 # 2. Start with a new clean image with just the code that is needed to run n8n
-FROM wagerflow/base:${NODE_VERSION}
+FROM n8nio/base:${NODE_VERSION}
 ENV NODE_ENV=production
 
 ARG N8N_RELEASE_TYPE=dev
