@@ -6,7 +6,6 @@ volumes:
 x-shared: &shared
   restart: always
   image: repo/n8n
-  build: ./
   environment:
     DB_TYPE: postgresdb
     DB_POSTGRESDB_HOST: postgres
@@ -63,7 +62,7 @@ services:
   redis:
     image: redis:latest
     restart: always
-    container_name: cache    
+    container_name: cache
     volumes:
       - ./redis_data:/data
     healthcheck:
@@ -73,8 +72,9 @@ services:
       retries: 10
   n8n:
     <<: *shared
+    build: ./
     dns:
-      - 8.8.8.8    
+      - 8.8.8.8
     ports:
       - 172.17.0.1:5678:5678
   n8n-worker:
