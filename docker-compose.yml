@@ -72,14 +72,14 @@ services:
   n8n:
     <<: *shared
     image: repo/n8n
-    build: ./
+    #build: ./
     dns:
       - 8.8.8.8
     ports:
       - 172.17.0.1:5678:5678
   n8n-worker:
     <<: *shared
-    #image: repo/n8n
+    image: repo/n8n
     command: worker
     depends_on:
       - n8n
