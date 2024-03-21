@@ -3,6 +3,8 @@ volumes:
   db_data:
   n8n:
   redis_data:
+x-shared: &shared
+  restart: always
   environment:
     DB_TYPE: postgresdb
     DB_POSTGRESDB_HOST: postgres
@@ -56,17 +58,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-  pg_admin:
-    image: dpage/pgadmin4:latest
-    container_name: pgadmin4
-    ports:
-        - 172.17.0.1:15432:80
-    environment:
-        - GUNICORN_THREADS=1
-        - PGADMIN_DEFAULT_EMAIL=gordon@wagerflow.io
-        - PGADMIN_DEFAULT_PASSWORD=Spinnekop13!
-    depends_on:
-        - postgres
   redis:
     image: redis:latest
     restart: always
@@ -79,7 +70,7 @@ services:
       timeout: 5s
       retries: 10
   n8n:
-    restart: always
+    <<: *shared
     image: repo/n8n
     build: ./
     dns:
@@ -87,7 +78,7 @@ services:
     ports:
       - 172.17.0.1:5678:5678
   n8n-worker:
-    restart: always
+    <<: *shared
     image: repo/n8n
     command: worker
     depends_on:
