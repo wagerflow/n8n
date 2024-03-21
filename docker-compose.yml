@@ -3,10 +3,6 @@ volumes:
   db_data:
   n8n:
   redis_data:
-#x-shared: &shared
-#  restart: always
-#  image: repo/n8n
-#  build: ./
   environment:
     DB_TYPE: postgresdb
     DB_POSTGRESDB_HOST: postgres
@@ -83,7 +79,6 @@ services:
       timeout: 5s
       retries: 10
   n8n:
-    #<<: *shared
     restart: always
     image: repo/n8n
     build: ./
@@ -92,7 +87,6 @@ services:
     ports:
       - 172.17.0.1:5678:5678
   n8n-worker:
-    #<<: *shared
     restart: always
     image: repo/n8n
     command: worker
