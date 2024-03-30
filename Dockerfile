@@ -36,7 +36,7 @@ RUN \
 	ln -s /usr/local/lib/node_modules/n8n/bin/n8n /usr/local/bin/n8n && \
 	mkdir .n8n && \
 	chown node:node .n8n && \
-	chmod 777 -R .n8n
+	chmod 777 -R ./
 
 ENV SHELL /bin/sh
 USER node
