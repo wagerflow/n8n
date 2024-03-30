@@ -50,7 +50,7 @@ x-shared: &shared
   volumes:
     - ./n8n:/home/node/.n8n
 services:
- redis:
+  redis:
     image: redis:6-alpine
     restart: always
     volumes:
