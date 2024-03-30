@@ -74,7 +74,7 @@ export class UserManagementMailer {
 		const template = await getTemplate('invite');
 		const result = await this.mailer?.sendMail({
 			emailRecipients: inviteEmailData.email,
-			subject: 'You have been invited to n8n',
+			subject: 'You have been invited to Wagerflow Engine',
 			body: template(inviteEmailData),
 		});
 
@@ -87,7 +87,7 @@ export class UserManagementMailer {
 		const template = await getTemplate('passwordReset', 'passwordReset.html');
 		const result = await this.mailer?.sendMail({
 			emailRecipients: passwordResetData.email,
-			subject: 'n8n password reset',
+			subject: 'Wagerflow Engine password reset',
 			body: template(passwordResetData),
 		});
 
