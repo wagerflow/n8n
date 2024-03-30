@@ -50,12 +50,15 @@ x-shared: &shared
     GENERIC_TIMEZONE: ${GENERIC_TIMEZONE}
   volumes:
     - ./n8n:/home/node/.n8n
+  depends_on:
+    redis:
+      condition: service_healthy
 services:
   redis:
     image: redis:6-alpine
     restart: always
     volumes:
-      - redis_storage:/data
+      - redis_data:/data
     healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
       interval: 5s
