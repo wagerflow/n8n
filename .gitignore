@@ -25,5 +25,5 @@ CHANGELOG-*.md
 build-storybook.log
 /.vs
 /.gitignore
-docker-compose.yml
 .env
+n8n
