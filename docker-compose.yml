@@ -14,11 +14,11 @@ x-shared: &shared
     DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD}
 
     # External Redis Cache
-    QUEUE_BULL_REDIS_HOST: ${REDIS_HOST}
-    QUEUE_BULL_REDIS_DB: ${REDIS_DB}
-    QUEUE_BULL_REDIS_PORT: ${REDIS_PORT}
-    QUEUE_BULL_REDIS_USERNAME: ${REDIS_USERNAME}
-    QUEUE_BULL_REDIS_PASSWORD: ${REDIS_PASSWORD}
+    QUEUE_BULL_REDIS_HOST: redis
+    #QUEUE_BULL_REDIS_DB: ${REDIS_DB}
+    #QUEUE_BULL_REDIS_PORT: ${REDIS_PORT}
+    #QUEUE_BULL_REDIS_USERNAME: ${REDIS_USERNAME}
+    #QUEUE_BULL_REDIS_PASSWORD: ${REDIS_PASSWORD}
     #QUEUE_BULL_REDIS_TIMEOUT_THRESHOLD:
     #QUEUE_BULL_REDIS_CLUSTER_NODES:
     #QUEUE_BULL_REDIS_TLS:
@@ -50,6 +50,16 @@ x-shared: &shared
   volumes:
     - ./n8n:/home/node/.n8n
 services:
+ redis:
+    image: redis:6-alpine
+    restart: always
+    volumes:
+      - redis_storage:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 10
   n8n:
     <<: *shared
     # Path to dockerfile.'./' represents the current directory in which docker-compose.yml is present.
